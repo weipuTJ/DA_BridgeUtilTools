@@ -1,0 +1,116 @@
+﻿<Window x:Class="DA_Excel2CadTools.Excel2CADSettings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DA_Excel2CadTools"
+        mc:Ignorable="d"
+        Title="格式设置" Height="500" Width="400" ResizeMode="NoResize" Loaded="Window_Loaded">
+    <Window.Resources>
+        <local:IsAutoCheckedReverse x:Key="iacr"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="label1" Content="表格标题：" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25"/>
+        <TextBox x:Name="textBoxTitle" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="25" Margin="80,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300"/>
+        <Label x:Name="label2" Content="制表比例：" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" Grid.Column="0"/>
+        <TextBox x:Name="textBoxScale" HorizontalAlignment="Left" Height="25" Margin="80,42,0,0" TextWrapping="Wrap" Width="100" Grid.Column="0" VerticalAlignment="Top" Padding="3"/>
+        <Label x:Name="label3" Content="插入点：" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <ComboBox x:Name="comboBoxInsertPt" Grid.Column="1" HorizontalAlignment="Left" Margin="70,42,0,0" VerticalAlignment="Top" Width="110">
+            <ComboBoxItem Content="左上"/>
+            <ComboBoxItem Content="中上"/>
+            <ComboBoxItem Content="右上"/>
+            <ComboBoxItem Content="左中"/>
+            <ComboBoxItem Content="正中"/>
+            <ComboBoxItem Content="右中"/>
+            <ComboBoxItem Content="左下"/>
+            <ComboBoxItem Content="中下"/>
+            <ComboBoxItem Content="右下"/>
+        </ComboBox>
+        <GroupBox x:Name="groupBox" Header="线形设置" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="55" Width="370">
+            <Canvas Grid.ColumnSpan="2">
+                <Label x:Name="label" Content="外框" HorizontalAlignment="Left" Height="25" Margin="5,5,0,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="comboBoxOuterLineStyle" HorizontalAlignment="Left" Height="20" Margin="40,8,0,0" VerticalAlignment="Top" Width="100" Padding="2,1,0,0"/>
+                <Button x:Name="buttonOuterLineColor" HorizontalAlignment="Left" Height="18" Width="20" Background="Green" Click="buttonOuterLineColor_Click" Canvas.Left="148" Canvas.Top="9"/>
+                <Label x:Name="label4" Content="内框" HorizontalAlignment="Left" Height="25" Margin="185,5,0,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="comboBoxInnerLineStyle" HorizontalAlignment="Left" Height="20" Margin="220,8,0,0" VerticalAlignment="Top" Width="100" Padding="2,1,0,0"/>
+                <Button x:Name="buttonInnerLineColor" HorizontalAlignment="Left" Height="20" Width="20" Background="Green" Click="buttonInnerLineColor_Click" Canvas.Left="328" Canvas.Top="8"/>
+            </Canvas>
+        </GroupBox>
+        <GroupBox x:Name="groupBox1" Header="字体设置" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" Height="55" Width="370" Grid.ColumnSpan="2">
+            <Canvas Grid.ColumnSpan="2">
+                <Label x:Name="label5" Content="样式" HorizontalAlignment="Left" Height="25" Margin="5,5,0,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="comboBoxTextStyle" HorizontalAlignment="Left" Height="20" Margin="40,8,0,0" VerticalAlignment="Top" Width="100" Padding="2,1,0,0"/>
+                <Label x:Name="label6" Content="字高" HorizontalAlignment="Left" Height="25" Margin="150,5,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="textBoxHeight" HorizontalAlignment="Left" Height="22" Width="50" Margin="185,7,0,0" VerticalAlignment="Top" Padding="2.5"/>
+                <Label x:Name="label7" Content="宽度系数" HorizontalAlignment="Left" Height="25" Margin="240,5,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="textBoxWidthFactor" HorizontalAlignment="Left" Height="22" Width="50" Margin="300,7,0,0" VerticalAlignment="Top" Padding="2.5"/>
+            </Canvas>
+        </GroupBox>
+        <GroupBox x:Name="groupBox2" Header="行设置" HorizontalAlignment="Left" Margin="10,210,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="55" Width="370">
+            <Canvas Grid.ColumnSpan="2">
+                <CheckBox x:Name="checkBoxRowAuto" HorizontalAlignment="Left" Height="20" Margin="5,10,0,0" VerticalAlignment="Top" >自动</CheckBox>
+                <Label x:Name="label8" Content="表头行高" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Canvas.Left="80" Canvas.Top="4"/>
+                <TextBox x:Name="textBoxHeaderRowHeight" HorizontalAlignment="Left" Height="22" Width="70" VerticalAlignment="Top" Canvas.Left="140" Canvas.Top="6" 
+                         IsEnabled="{Binding ElementName=checkBoxRowAuto,Path=IsChecked,Converter={StaticResource iacr}}"/>
+                <Label x:Name="label9" Content="内容行高" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Canvas.Left="220" Canvas.Top="4"/>
+                <TextBox x:Name="textBoxContentRowHeight" HorizontalAlignment="Left" Height="22" Width="70" VerticalAlignment="Top" Canvas.Left="280" Canvas.Top="6" 
+                         IsEnabled="{Binding ElementName=checkBoxRowAuto,Path=IsChecked,Converter={StaticResource iacr}}"/>
+            </Canvas>
+        </GroupBox>
+        <GroupBox x:Name="groupBox3" Header="列设置" HorizontalAlignment="Left" Margin="10,275,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="160" Width="370">
+            <Canvas Grid.ColumnSpan="2">
+                <CheckBox x:Name="checkBoxColumnAuto" HorizontalAlignment="Left" Height="20" Margin="5,10,0,0" VerticalAlignment="Top" Unchecked="checkBoxColumnAuto_Unchecked" IsChecked="True" >自动</CheckBox>
+                <ListView x:Name="listViewColumnSetting" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="5" Canvas.Top="30"
+                          Width="345" Height="105"  IsEnabled="{Binding ElementName=checkBoxColumnAuto,Path=IsChecked,Converter={StaticResource iacr}}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="列标记" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox x:Name="colName" Text="{Binding ColName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" Width="80" TextAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="列宽度" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox x:Name="colName" Text="{Binding ColWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F0}}" IsEnabled="True" Width="80" TextAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="水平对齐" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox x:Name="horizontalAlignment" SelectedIndex="{Binding HrAlignment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="68">
+                                            <ComboBoxItem>靠左</ComboBoxItem>
+                                            <ComboBoxItem>居中</ComboBoxItem>
+                                            <ComboBoxItem>靠右</ComboBoxItem>
+                                        </ComboBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="竖直对齐" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox x:Name="horizontalAlignment" SelectedIndex="{Binding VtAlignment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="68">
+                                            <ComboBoxItem>靠上</ComboBoxItem>
+                                            <ComboBoxItem>居中</ComboBoxItem>
+                                            <ComboBoxItem>靠下</ComboBoxItem>
+                                        </ComboBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Canvas>
+        </GroupBox>
+        <Button x:Name="buttonCancel" Content="取消" Grid.Column="1" HorizontalAlignment="Left" Margin="10.2,443,0,0" VerticalAlignment="Top" Width="75" Click="buttonCancel_Click"/>
+        <Button x:Name="buttonConfirm" Content="确定" Grid.Column="1" HorizontalAlignment="Left" Margin="100,443,0,0" VerticalAlignment="Top" Width="75" Click="buttonConfirm_Click"/>
+    </Grid>
+</Window>
