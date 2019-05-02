@@ -91,5 +91,42 @@ namespace DA_DimTools
             }
             
         }
+        /// <summary>
+        /// 选择直线后标注该直线的斜率
+        /// </summary>
+        [CommandMethod("DA_DimSlop")]
+        public void DimSlope()
+        {
+
+            Document doc = Application.DocumentManager.MdiActiveDocument;
+            Database db = doc.Database;
+            Editor ed = doc.Editor;
+            using (Transaction trans = db.TransactionManager.StartTransaction())
+            {
+                //1.选择直线
+                PromptEntityOptions lineOpt = new PromptEntityOptions("\n选择直线");
+                lineOpt.SetRejectMessage("请选择直线对象！");
+                lineOpt.AddAllowedClass(typeof(Line), false);
+                PromptEntityResult lineRes = ed.GetEntity(lineOpt);
+                if (lineRes.Status != PromptStatus.OK) return;
+                Line line= lineRes.ObjectId.GetObject(OpenMode.ForRead) as Line;
+                //2.设置标注比例
+                PromptDoubleOptions scaleOpt = new PromptDoubleOptions($"\n设置标注比例<{scale}>");
+                scaleOpt.AllowNegative = false;
+                scaleOpt.AllowZero = false;
+                scaleOpt.AllowNone = true;
+                PromptDoubleResult scaleRes = ed.GetDouble(scaleOpt);
+                if (scaleRes.Status == PromptStatus.OK) scale = scaleRes.Value;
+                //3.设置标注样式为“1：x”还是“x:1”
+                bool isY2X = true;
+                PromptStringOptions styleOpt = new PromptStringOptions("\n是否切换为\"xxx：1\"格式[Y|N]");
+                PromptResult styleRes = ed.GetString(styleOpt);
+                if (styleRes.StringResult.ToUpper() == "Y") isY2X = false;
+                //4.进行标注
+                LineSegment3d line3d = new LineSegment3d(line.StartPoint, line.EndPoint);
+                db.LineSlopeDim(line3d, scale,isY2X);
+                trans.Commit();
+            }
+        }
     }
 }
