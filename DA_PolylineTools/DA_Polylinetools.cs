@@ -284,7 +284,7 @@ namespace DA_PolylineTools
                 //1.选择需要逆转的曲线
                 PromptEntityOptions cvOpt = new PromptEntityOptions("\n选择需要逆转方向的曲线");
                 cvOpt.SetRejectMessage("\n并非曲线对象！");
-                cvOpt.AddAllowedClass(typeof(Curve), true);//仅能选择曲线对象      
+                cvOpt.AddAllowedClass(typeof(Curve), false);//仅能选择曲线对象      
                 PromptEntityResult cvRes = ed.GetEntity(cvOpt);
                 if (cvRes.Status != PromptStatus.OK) return;
                 ObjectId cvId = cvRes.ObjectId;
